@@ -5,8 +5,14 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='payment_term_id']" position="after">
-               <field name="purchase_order_ids">
+            <!-- <xpath expr="//field[@name='payment_term_id']" position="after"> -->
+            <xpath expr="//group[2]" position="inside">
+               <field name="purchase_order_ids" attrs="{'invisible': [('purchase_order_count', '=', 0)]}">
+                    <tree>
+                        <field name="name"/>
+                    </tree>
+                </field>
+               <field name="mrp_production_ids" attrs="{'invisible': [('mrp_production_count', '=', 0)]}">
                     <tree>
                         <field name="name"/>
                     </tree>
