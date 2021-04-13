@@ -5,8 +5,9 @@
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='company_id']" position="after">
-                    <field name="sale_order_ids">
+                <!-- <xpath expr="//field[@name='company_id']" position="after"> -->
+                <xpath expr="//group[2]" position="inside">
+                    <field name="sale_order_ids" attrs="{'invisible': [('sale_order_count', '=', 0)]}">
                         <tree>
                             <field name="name"/>
                         </tree>
