@@ -23,7 +23,7 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    production_line_ids = fields.One2many('stock.move.line', 'sale_line_id', string='Generated Production Lines', readonly=True)
+    production_line_ids = fields.One2many('stock.move', 'sale_line_id', string='Generated Production Lines', readonly=True)
     bom_id = fields.Many2one('mrp.bom', compute='_compute_bom')
 
     @api.depends('order_id', 'order_id.purchase_order_ids')
