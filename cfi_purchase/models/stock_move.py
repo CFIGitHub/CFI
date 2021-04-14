@@ -7,19 +7,19 @@ from odoo import models, fields, api
 class StockMoveLine(models.Model):
     _inherit = 'stock.move.line'
 
-    sale_line_id = fields.Many2one(comodel_name='sale.order.line', compute='_compute_sale_line_id', string='Related Sale Line')
+    sale_line_id = fields.Many2one(comodel_name='sale.order.line', related='move_id.production_sale_line_id', string='Related Sale Line')
 
-    @api.depends('move_id', 'move_id.sale_line_id', 'production_id', 'production_id.sale_order_ids')
-    def _compute_sale_line_id(self):
-        for line in self:
-            if line.move_id.sale_line_id:
-                line.sale_line_id = line.move_id.sale_line_id
-            else:
-                try:
-                    bom_line_id = line.move_id.mapped('bom_line_id')
-                    order_lines = production_id.mapped('sale_order_ids.order_line')
-                    for so_line in order_lines:
-                        if line.product_id in so_line.bom_id.bom_line_ids.mapped('product_id'):
-                            line.sale_line_id = so_line.id
-                except e:
-                    line.sale_line_id = False
+class StockMove(models.Model):
+    _inherit = 'stock.move'
+
+    sale_order_id = fields.Many2one(comodel_name='sale.order', compute='_compute_sale_order_fields')
+    production_sale_line_id = fields.Many2one(comodel_name='sale.order.line', compute='_compute_sale_order_fields')
+    # @api.depends('raw_material_production_id', 'raw_material_production_id.sale_order_ids', 'production_id', 'production_id.sale_order_ids')
+    @api.depends('raw_material_production_id', 'raw_material_production_id.sale_order_ids')
+    def _compute_sale_order_fields(self):
+        for move in self:
+            if move.raw_material_production_id.sale_order_ids:
+                for so_line in move.raw_material_production_id.sale_order_ids.mapped('order_line'):
+                    if move.bom_line_id in so_line.bom_id.mapped('bom_line_ids'):
+                        move.production_sale_line_id = so_line.id
+                        move.sale_order_id = so_line.order_id.id
