@@ -9,12 +9,12 @@
             <xpath expr="//group[2]" position="inside">
                <field name="purchase_order_ids" attrs="{'invisible': [('purchase_order_count', '=', 0)]}">
                     <tree>
-                        <field name="name"/>
+                        <field name="name" readonly="1"/>
                     </tree>
                 </field>
                <field name="mrp_production_ids" attrs="{'invisible': [('mrp_production_count', '=', 0)]}">
                     <tree>
-                        <field name="name"/>
+                        <field name="name" readonly="1"/>
                     </tree>
                 </field>
             </xpath>
