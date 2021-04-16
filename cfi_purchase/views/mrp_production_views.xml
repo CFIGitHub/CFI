@@ -12,6 +12,11 @@
                             <field name="name" readonly="1"/>
                         </tree>
                     </field>
+                    <field name="sale_line_id" attrs="{'invisible': [('sale_order_count', '=', 0)]}">
+                        <tree>
+                            <field name="name" readonly="1"/>
+                        </tree>
+                    </field>
                 </xpath>
             </field>
         </record>

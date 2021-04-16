@@ -13,3 +13,6 @@ class PurchaseOrder(models.Model):
     def _compute_sale_order_ids(self):
         for purchase in self:
             purchase.sale_order_ids = purchase._get_sale_orders()
+
+# class PurchaseOrderLine(models.Model):
+#     _inherit = 'purchase.order.line'
