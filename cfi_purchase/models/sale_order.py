@@ -24,12 +24,11 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     production_line_ids = fields.One2many('stock.move', 'sale_line_id', string='Generated Production Lines', readonly=True)
-    bom_id = fields.Many2one('mrp.bom', compute='_compute_bom')
 
-    @api.depends('order_id', 'order_id.purchase_order_ids')
-    def _compute_bom(self):
-        for line in self:
-            if line.product_id.product_tmpl_id.bom_ids:
-                line.bom_id = line.product_id.product_tmpl_id.bom_ids and line.product_id.product_tmpl_id.bom_ids[0]
-            else:
-                line.bom_id = False
+    def _prepare_procurement_values(self, group_id=False):
+        # used when creating values on stock move 
+        values = super(SaleOrderLine, self)._prepare_procurement_values(group_id)
+        return {
+            'sale_line_id': self.id,
+            **values
+        }
