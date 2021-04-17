@@ -18,5 +18,3 @@ class MrpProduction(models.Model):
             lines |= production.move_raw_ids.mapped('sale_line_id')
             lines |= production.move_finished_ids.mapped('sale_line_id')
             production.sale_line_id = lines.ids
-
-    # def _get_move_raw_values(self, product_id, product_uom_qty, product_uom, operation_id=False, bom_line=False):
