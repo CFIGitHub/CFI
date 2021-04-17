@@ -14,5 +14,14 @@ class PurchaseOrder(models.Model):
         for purchase in self:
             purchase.sale_order_ids = purchase._get_sale_orders()
 
-# class PurchaseOrderLine(models.Model):
-#     _inherit = 'purchase.order.line'
+class PurchaseOrderLine(models.Model):
+    _inherit = 'purchase.order.line'
+
+    @api.model
+    def _prepare_purchase_order_line_from_procurement(self, product_id, product_qty, product_uom, company_id, values, po):
+        ret_vals = super(PurchaseOrderLine, self)._prepare_purchase_order_line_from_procurement(
+            product_id, product_qty, product_uom, company_id, values, po)
+        return {
+            'sale_line_id': values.get('sale_line_id', False),
+            **ret_vals
+        }
