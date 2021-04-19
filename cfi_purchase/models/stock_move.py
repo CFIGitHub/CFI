@@ -36,6 +36,6 @@ class StockMove(models.Model):
     def _prepare_procurement_values(self):
         values = super(StockMove, self)._prepare_procurement_values()
         return {
-            'sale_line_id': self.sale_line_id,
+            'sale_line_id': self.sale_line_id.id,
             **values
         }
