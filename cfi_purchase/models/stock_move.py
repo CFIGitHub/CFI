@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api
-import pudb
+
 
 class StockMoveLine(models.Model):
     _inherit = 'stock.move.line'
@@ -36,6 +36,6 @@ class StockMove(models.Model):
     def _prepare_procurement_values(self):
         values = super(StockMove, self)._prepare_procurement_values()
         return {
-            'sale_line_id': self.sale_line_id,
+            'sale_line_id': self.sale_line_id.id,
             **values
         }

@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api
-import pudb
+
 
 class ProcurementGroup(models.Model):
     _inherit = 'procurement.group'
@@ -11,10 +11,11 @@ class StockRule(models.Model):
     _inherit = 'stock.rule'
 
     # handles run manufacture
+    # since mrp production is m2m on sale_line_id, needs to use tuple to add sale line id
     def _prepare_mo_vals(self, product_id, product_qty, product_uom, location_id, name, origin, company_id, values, bom):
         ret_vals = super(StockRule, self)._prepare_mo_vals(product_id, product_qty, product_uom, location_id, name, origin, company_id, values, bom)
         return {
-            'sale_line_id': values.get('sale_line_id', False),
+            'sale_line_id': [(4, values.get('sale_line_id', False), False)],
             **ret_vals
         }
 
