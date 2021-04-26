@@ -17,10 +17,10 @@ class MrpProduction(models.Model):
 
     def _get_move_raw_values(self, product_id, product_uom_qty, product_uom, operation_id=False, bom_line=False):
         data = super(MrpProduction, self)._get_move_raw_values(product_id, product_uom_qty, product_uom, operation_id, bom_line)
-        data.update({'sale_line_id': self.sale_line_id[0].id})
+        data.update({'sale_line_id': self.sale_line_id[0].id if len(self.sale_line_id) else False})
         return data
 
     def _get_move_finished_values(self, product_id, product_uom_qty, product_uom, operation_id=False, byproduct_id=False):
         data = super(MrpProduction, self)._get_move_finished_values(product_id, product_uom_qty, product_uom, operation_id, byproduct_id)
-        data.update({'sale_line_id': self.sale_line_id[0].id})
+        data.update({'sale_line_id': self.sale_line_id[0].id if len(self.sale_line_id) else False})
         return data
