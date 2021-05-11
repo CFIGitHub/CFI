@@ -8,16 +8,8 @@
                 <!-- <xpath expr="//field[@name='company_id']" position="after"> -->
                 <xpath expr="//group[2]" position="inside">
                     <field name="sale_order_count" invisible="1"/>
-                    <field name="sale_order_ids" attrs="{'invisible': [('sale_order_count', '=', 0)]}">
-                        <tree>
-                            <field name="name" readonly="1"/>
-                        </tree>
-                    </field>
-                    <field name="sale_line_id" attrs="{'invisible': [('sale_order_count', '=', 0)]}">
-                        <tree>
-                            <field name="name" readonly="1"/>
-                        </tree>
-                    </field>
+                    <field name="sale_order_ids" attrs="{'invisible': [('sale_order_count', '=', 0)]}"/>
+                    <field name="sale_line_id" attrs="{'invisible': [('sale_order_count', '=', 0)]}"/>
                 </xpath>
             </field>
         </record>
