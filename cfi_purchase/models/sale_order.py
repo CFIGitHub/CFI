@@ -28,7 +28,5 @@ class SaleOrderLine(models.Model):
     def _prepare_procurement_values(self, group_id=False):
         # used when creating values on stock move 
         values = super(SaleOrderLine, self)._prepare_procurement_values(group_id)
-        return {
-            'sale_line_id': self.id,
-            **values
-        }
+        values.update({'sale_line_id': self.id})
+        return values

@@ -19,9 +19,7 @@ class PurchaseOrderLine(models.Model):
 
     @api.model
     def _prepare_purchase_order_line_from_procurement(self, product_id, product_qty, product_uom, company_id, values, po):
-        ret_vals = super(PurchaseOrderLine, self)._prepare_purchase_order_line_from_procurement(
-            product_id, product_qty, product_uom, company_id, values, po)
-        return {
-            'sale_line_id': values.get('sale_line_id', False),
-            **ret_vals
-        }
+        ret_vals = super(PurchaseOrderLine, self)._prepare_purchase_order_line_from_procurement(product_id, product_qty, product_uom, company_id, values, po)
+        if values.get('sale_line_id', False):
+            ret_vals.update({'sale_line_id': values.get('sale_line_id')})
+        return ret_vals
