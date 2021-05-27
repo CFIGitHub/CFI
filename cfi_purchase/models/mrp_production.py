@@ -6,9 +6,9 @@ from odoo import models, fields, api
 
 class MrpProduction(models.Model):
     _inherit = 'mrp.production'
-
-    sale_order_ids = fields.Many2many(comodel_name='sale.order', compute='_compute_sale_order_ids', string='Sale Orders')
-    sale_line_id = fields.Many2many(comodel_name='sale.order.line', string='Sale Order Line')
+    groups="sales_team.group_sale_salesman",
+    sale_order_ids = fields.Many2many(comodel_name='sale.order', compute='_compute_sale_order_ids', groups="sales_team.group_sale_salesman", string='Sale Orders')
+    sale_line_id = fields.Many2many(comodel_name='sale.order.line', groups="sales_team.group_sale_salesman", string='Sale Order Line')
 
     @api.depends('sale_order_count')
     def _compute_sale_order_ids(self):

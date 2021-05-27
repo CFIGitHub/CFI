@@ -7,8 +7,8 @@ from odoo import models, fields, api
 class StockMoveLine(models.Model):
     _inherit = 'stock.move.line'
 
-    sale_order_id = fields.Many2one(comodel_name='sale.order', related='move_id.sale_order_id', string='Related Sale Order')
-    sale_line_id = fields.Many2one(comodel_name='sale.order.line', related='move_id.sale_line_id', string='Related Sale Order Line')
+    sale_order_id = fields.Many2one(comodel_name='sale.order', related='move_id.sale_order_id', groups="sales_team.group_sale_salesman", string='Related Sale Order')
+    sale_line_id = fields.Many2one(comodel_name='sale.order.line', related='move_id.sale_line_id', groups="sales_team.group_sale_salesman", string='Related Sale Order Line')
 
 
 class StockMove(models.Model):

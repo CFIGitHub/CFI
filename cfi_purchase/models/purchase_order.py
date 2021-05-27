@@ -7,7 +7,7 @@ from odoo import models, fields, api
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
-    sale_order_ids = fields.Many2many(comodel_name='sale.order', compute='_compute_sale_order_ids', string='Sale Orders')
+    sale_order_ids = fields.Many2many(comodel_name='sale.order', groups="sales_team.group_sale_salesman", compute='_compute_sale_order_ids', string='Sale Orders')
 
     @api.depends('sale_order_count')
     def _compute_sale_order_ids(self):
